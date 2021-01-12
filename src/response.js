@@ -9,7 +9,7 @@ function statusColor(status) {
       break;
     case "2":
       // Success
-      return color.black(status);
+      return color.white(status);
       break;
     case "3":
       // Redirection
