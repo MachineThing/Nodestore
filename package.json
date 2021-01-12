@@ -11,5 +11,8 @@
     "url": "github.com/machinething/nodestore"
   },
   "author": "Mason Fisher",
-  "license": "MIT"
+  "license": "MIT",
+  "dependencies": {
+    "colorette": "^1.2.1"
+  }
 }
