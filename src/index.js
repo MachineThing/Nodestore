@@ -1,4 +1,5 @@
 var http = require('http');
+var resp = require('./response.js')
 const port = 8000; // The port used for this HTTP server
 
 var server = http.createServer(function(req, res) {
@@ -7,9 +8,7 @@ var server = http.createServer(function(req, res) {
   res - Response
   */
   if (req.url == '/') {
-    res.writeHead(200, {'Content-Type':"text/html"});
-    res.write('<html><head><title>Hello, world</title></head><body><h1>Hello, world!</h1></body></html>');
-    res.end();
+    resp.sendpage(res, 'index.html');
   }
 });
 
