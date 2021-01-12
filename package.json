@@ -1,0 +1,15 @@
+{
+  "name": "nodestore",
+  "version": "1.0.0",
+  "description": "Simple Store powered by Node.js",
+  "main": "src/index.js",
+  "scripts": {
+    "start": "node ./src"
+  },
+  "repository": {
+    "type": "git",
+    "url": "github.com/machinething/nodestore"
+  },
+  "author": "Mason Fisher",
+  "license": "MIT"
+}
