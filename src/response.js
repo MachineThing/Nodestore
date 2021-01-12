@@ -1,6 +1,6 @@
 var fs = require('fs');
 
-exports.sendpage = function(res, pagename, tags) {
+exports.sendpage = function(res, pagename, tags, status=200) {
   fs.readFile('./src/pages/'+pagename, 'utf8', function(err, html) {
     if (err) {
       return console.error(err);
@@ -12,7 +12,7 @@ exports.sendpage = function(res, pagename, tags) {
           html = html.replace(temps[temp], temps[temp].charAt(0)+tags[temps[temp].slice(2,-1)]);
         }
       }
-      res.writeHead(200, {'Content-Type':"text/html"});
+      res.writeHead(status, {'Content-Type':"text/html"});
       res.write(html);
       res.end();
     }

@@ -9,6 +9,8 @@ var server = http.createServer(function(req, res) {
   */
   if (req.url == '/') {
     resp.sendpage(res, 'index.html', {'NODE':process.versions['node']});
+  } else {
+    resp.sendpage(res, '404.html', {'NODE':process.versions['node'], 'URL':req.url, 'HOST':req.headers['host'], 'PORT':port}, 404);
   }
 });
 
