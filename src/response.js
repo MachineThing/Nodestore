@@ -34,7 +34,7 @@ function statusColor(status) {
   }
 }
 
-exports.sendpage = function(res, pagename, tags, status=200) {
+exports.sendpage = function(res, urlname, pagename, tags, status=200) {
   fs.readFile('./src/pages/'+pagename, 'utf8', function(err, html) {
     if (err) {
       return console.error(err);
@@ -47,7 +47,7 @@ exports.sendpage = function(res, pagename, tags, status=200) {
         }
       }
 
-      console.log(statusColor(status)+' | '+pagename);
+      console.log(statusColor(status)+' | '+urlname);
       res.writeHead(status, {'Content-Type':"text/html"});
       res.write(html);
       res.end();
