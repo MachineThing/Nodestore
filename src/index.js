@@ -8,7 +8,7 @@ var server = http.createServer(function(req, res) {
   res - Response
   */
   if (req.url == '/') {
-    resp.sendpage(res, 'index.html');
+    resp.sendpage(res, 'index.html', {'NODE':process.versions['node']});
   }
 });
 
