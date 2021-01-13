@@ -36,7 +36,7 @@ function statusColor(status) {
   }
 }
 
-exports.sendpage = function(res, urlname, pagename, htmlTags={}, status=200) {
+exports.sendpage = function(res, urlname, pagename, htmlTags={}, status=200, input=null) {
   var type = mime.getType('./src/'+pagename);
   if (type == null) {
     Error('Unknown filetype: '+'./src/'+pagename);
