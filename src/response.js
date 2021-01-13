@@ -34,11 +34,26 @@ function statusColor(status) {
   }
 }
 
-exports.sendpage = function(res, urlname, pagename, tags, status=200) {
-  fs.readFile('./src/pages/'+pagename, 'utf8', function(err, html) {
+exports.sendpage = function(res, urlname, pagename, type, tags={}, status=200) {
+  var header;
+  switch (type) {
+    case 0:
+      header = {'Content-Type':"text/html"};
+      break;
+    case 1:
+      header = {'Content-Type':"text/css"};
+      break;
+    case 2:
+      header = {'Content-Type':"application/javascript"};
+      break;
+    default:
+      Error('Unknown filetype: '+type);
+      break;
+  }
+  fs.readFile('./src/'+pagename, 'utf8', function(err, html) {
     if (err) {
       return console.error(err);
-    } else {
+    } else if (type == 0) {
       const temps = html.match(/[^\\]{(\s*?.*?)*?}/gi);
       if (temps != null) {
         for (temp = 0; temp < temps.length; temp++) {
@@ -46,11 +61,10 @@ exports.sendpage = function(res, urlname, pagename, tags, status=200) {
           html = html.replace(temps[temp], temps[temp].charAt(0)+tags[temps[temp].slice(2,-1)]);
         }
       }
-
-      console.log(statusColor(status)+' | '+urlname);
-      res.writeHead(status, {'Content-Type':"text/html"});
-      res.write(html);
-      res.end();
     }
+    console.log(statusColor(status)+' | '+urlname);
+    res.writeHead(status, header);
+    res.write(html);
+    res.end();
   });
 }
