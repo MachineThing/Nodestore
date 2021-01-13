@@ -2,6 +2,7 @@ var fs = require('fs');
 var color = require('colorette');
 var builtin = require('./builtinTags.js');
 var mime = require('mime');
+var mustache = require('mustache');
 
 function statusColor(status) {
   switch (status.toString()[0]) {
@@ -50,14 +51,20 @@ exports.sendpage = function(res, urlname, pagename, htmlTags={}, status=200, inp
     if (err) {
       return console.error(err);
     } else if (type == 'text/html') {
-      tags = Object.assign({}, htmlTags, builtin.tags(urlname));
       const temps = html.match(/[^\\]{(\s*?.*?)*?}/gi);
-      if (temps != null) {
-        for (temp = 0; temp < temps.length; temp++) {
-          // Replace the tag with the template. I know it's lengthy, deal with it.
-          html = html.replace(temps[temp], temps[temp].charAt(0)+tags[temps[temp].slice(2,-1)]);
-        }
+      // Mustache can render only one set of tags, so we are combining all tags here.
+      var tags = {}
+      // Forgive my spaghetti here, I really shouldn't repeat code here.
+      for (var key in builtin.tags(urlname)) {
+        tags[key] = builtin.tags(urlname)[key]
       }
+      for (var key in htmlTags) {
+        tags[key] = htmlTags[key]
+      }
+      for (var key in input) {
+        tags[key] = input[key]
+      }
+      html = mustache.render(html, tags);
     }
     console.log(statusColor(status)+' | '+urlname);
     res.writeHead(status, {'Content-Type':type});

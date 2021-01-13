@@ -4,21 +4,23 @@
     <link rel="stylesheet" href="/index.css">
   </head>
   <body>
-    <div class="main" style="background-image: linear-gradient({SHOP_COLOR}, white);">
-      <h1>{SHOP_TYPE} department</h1>
-      <form action="{URL}">
-        <input type="text" name="s" placeholder="Search in the {SHOP_TYPE} department" /><br>
+    <div class="main" style="background-image: linear-gradient({{SHOP_COLOR}}, white);">
+      <h1>{{SHOP_TYPE}} department</h1>
+      <form action="{{URL}}">
+        <input type="text" name="s" placeholder="Search in the {{SHOP_TYPE}} department" /><br>
         <input type="submit" value="Search" /><br>
       </form>
-      <div class="store" style="display: {DISPLAY_SHOP};">
+      <div class="store" style="display: {{DISPLAY_SHOP}};">
         <table>
+          {{#results}}
           <tr>
-            <td>Thing 1</td>
-            <td>500$</td>
+            <td>{{name}}</td>
+            <td>{{cost}}</td>
           </tr>
+          {{/results}}
         </table>
       </div>
     </div>
-    <p class="copyright">&#169; Mason Fisher {YEAR}</p>
+    <p class="copyright">&#169; Mason Fisher {{YEAR}}</p>
   </body>
 </html>
