@@ -1,6 +1,7 @@
 var fs = require('fs');
 var color = require('colorette');
 var builtin = require('./builtinTags.js');
+var mime = require('mime');
 
 function statusColor(status) {
   switch (status.toString()[0]) {
@@ -35,26 +36,15 @@ function statusColor(status) {
   }
 }
 
-exports.sendpage = function(res, urlname, pagename, type, htmlTags={}, status=200) {
-  var header;
-  switch (type) {
-    case 0:
-      header = {'Content-Type':"text/html"};
-      break;
-    case 1:
-      header = {'Content-Type':"text/css"};
-      break;
-    case 2:
-      header = {'Content-Type':"application/javascript"};
-      break;
-    default:
-      Error('Unknown filetype: '+type);
-      break;
+exports.sendpage = function(res, urlname, pagename, htmlTags={}, status=200) {
+  var type = mime.getType('./src/'+pagename);
+  if (type == null) {
+    Error('Unknown filetype: '+'./src/'+pagename);
   }
   fs.readFile('./src/'+pagename, 'utf8', function(err, html) {
     if (err) {
       return console.error(err);
-    } else if (type == 0) {
+    } else if (type == 'text/html') {
       tags = Object.assign({}, htmlTags, builtin.tags);
       const temps = html.match(/[^\\]{(\s*?.*?)*?}/gi);
       if (temps != null) {
@@ -65,7 +55,7 @@ exports.sendpage = function(res, urlname, pagename, type, htmlTags={}, status=20
       }
     }
     console.log(statusColor(status)+' | '+urlname);
-    res.writeHead(status, header);
+    res.writeHead(status, {'Content-Type':type});
     res.write(html);
     res.end();
   });

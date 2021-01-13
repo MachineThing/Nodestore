@@ -2,9 +2,9 @@ var resp = require('./response.js');
 
 exports.path = function(req, res) {
   paths = [
-    ['/', 'pages/index.html', 0],
-    ['/teapot', 'pages/teapot.html', 0, {'LUCKY':Math.round(Math.random()*10)}, 418],
-    ['/index.css', 'css/index.css', 1]
+    ['/', 'pages/index.html'],
+    ['/teapot', 'pages/teapot.html', {'LUCKY':Math.round(Math.random()*10)}, 418],
+    ['/index.css', 'css/index.css']
   ]
 
   // Find the path
@@ -18,7 +18,7 @@ exports.path = function(req, res) {
   }
 
   if (index != -1) {
-    resp.sendpage(res, req.url, paths[index][1], paths[index][2], paths[index][3], paths[index][4]);
+    resp.sendpage(res, req.url, paths[index][1], paths[index][2], paths[index][3]);
     return false // Page found
   } else {
     return true // Page not found (404)

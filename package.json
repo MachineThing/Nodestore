@@ -13,6 +13,7 @@
   "author": "Mason Fisher",
   "license": "MIT",
   "dependencies": {
-    "colorette": "^1.2.1"
+    "colorette": "^1.2.1",
+    "mime": "^2.4.7"
   }
 }
