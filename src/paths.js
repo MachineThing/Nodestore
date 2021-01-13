@@ -2,7 +2,7 @@ var resp = require('./response.js');
 
 exports.path = function(req, res) {
   paths = [
-    ['/', 'pages/index.html', 0, {'NODE':process.versions['node']}],
+    ['/', 'pages/index.html', 0],
     ['/teapot', 'pages/teapot.html', 0, {'LUCKY':Math.round(Math.random()*10)}, 418],
     ['/index.css', 'css/index.css', 1]
   ]

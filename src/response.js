@@ -1,5 +1,6 @@
 var fs = require('fs');
 var color = require('colorette');
+var builtin = require('./builtinTags.js');
 
 function statusColor(status) {
   switch (status.toString()[0]) {
@@ -34,7 +35,7 @@ function statusColor(status) {
   }
 }
 
-exports.sendpage = function(res, urlname, pagename, type, tags={}, status=200) {
+exports.sendpage = function(res, urlname, pagename, type, htmlTags={}, status=200) {
   var header;
   switch (type) {
     case 0:
@@ -54,6 +55,7 @@ exports.sendpage = function(res, urlname, pagename, type, tags={}, status=200) {
     if (err) {
       return console.error(err);
     } else if (type == 0) {
+      tags = Object.assign({}, htmlTags, builtin.tags);
       const temps = html.match(/[^\\]{(\s*?.*?)*?}/gi);
       if (temps != null) {
         for (temp = 0; temp < temps.length; temp++) {
