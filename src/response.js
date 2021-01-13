@@ -45,7 +45,7 @@ exports.sendpage = function(res, urlname, pagename, htmlTags={}, status=200) {
     if (err) {
       return console.error(err);
     } else if (type == 'text/html') {
-      tags = Object.assign({}, htmlTags, builtin.tags);
+      tags = Object.assign({}, htmlTags, builtin.tags(urlname));
       const temps = html.match(/[^\\]{(\s*?.*?)*?}/gi);
       if (temps != null) {
         for (temp = 0; temp < temps.length; temp++) {

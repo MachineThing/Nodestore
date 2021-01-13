@@ -1,5 +1,8 @@
 const date = new Date();
-exports.tags = {
-  'NODE':process.versions['node'],
-  'YEAR':date.getFullYear()
+exports.tags = function(urlname) {
+  return {
+    'NODE':process.versions['node'],
+    'URL':urlname,
+    'YEAR':date.getFullYear()
+  }
 }
