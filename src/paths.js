@@ -3,7 +3,6 @@ var resp = require('./response.js');
 exports.path = function(req, res) {
   paths = [
     ['/', 'pages/index.html'],
-    ['/teapot', 'pages/teapot.html', {'LUCKY':Math.round(Math.random()*10)}, 418],
     ['/index.css', 'css/index.css']
   ]
 
