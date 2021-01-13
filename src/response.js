@@ -41,6 +41,11 @@ exports.sendpage = function(res, urlname, pagename, htmlTags={}, status=200, inp
   if (type == null) {
     Error('Unknown filetype: '+'./src/'+pagename);
   }
+  if (input == null) {
+    htmlTags['DISPLAY_SHOP'] = 'none';
+  } else {
+    htmlTags['DISPLAY_SHOP'] = 'block';
+  }
   fs.readFile('./src/'+pagename, 'utf8', function(err, html) {
     if (err) {
       return console.error(err);

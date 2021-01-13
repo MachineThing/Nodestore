@@ -22,6 +22,8 @@ exports.path = function(req, res) {
       // Format the input
       input[rinput[iform].split('=')[0]] = rinput[iform].split('=')[1]
     }
+  } else {
+    input = null;
   }
   for (var insearch=0; insearch<paths.length; insearch++) {
     if (paths[insearch][0] == path) {
