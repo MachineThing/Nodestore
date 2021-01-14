@@ -2,8 +2,9 @@
   <head>
     <title>Node Store</title>
     <link rel="stylesheet" href="/index.css">
+    <script src="/js/formatTable.js"></script>
   </head>
-  <body>
+  <body onload="formatTable()">
     <div class="main" style="background-image: linear-gradient({{SHOP_COLOR}}, white);">
       <h1>{{SHOP_TYPE}} department</h1>
       <form action="{{URL}}">
@@ -11,11 +12,11 @@
         <input type="submit" value="Search" /><br>
       </form>
       <div class="store">
-        <table>
+        <table id="item_table">
           {{#results}}
           <tr>
             <td class="item_name">{{name}}</td>
-            <td class="item_price">{{price}}$</td>
+            <td class="item_price">{{price}}</td>
           </tr>
           {{/results}}
         </table>
