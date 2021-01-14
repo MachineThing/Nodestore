@@ -1,11 +1,14 @@
 const { Client } = require('pg');
 const { config } = require('./config.js');
 
-const database = new Client({'user':config['PG_USER'], 'password':config['PG_PASSWORD'], 'database':config['PG_DATABASE']});
-
-database.connect();
-
-database.query('SELECT * FROM \"items\"', (err, res) => {
-  console.log(err ? err.stack : res.rows[1]);
-  database.end();
-})
+exports.query = async function(sql) {
+  const database = new Client( // All of this is in the config.js file
+    {'user':config['PG_USER'],
+    'password':config['PG_PASSWORD'],
+    'database':config['PG_DATABASE']
+  });
+  await database.connect()
+  const result = await database.query(sql);
+  database.end()
+  return result;
+}

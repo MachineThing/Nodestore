@@ -1,8 +1,9 @@
 var fs = require('fs');
 var color = require('colorette');
-var builtin = require('./builtinTags.js');
 var mime = require('mime');
 var mustache = require('mustache');
+var builtin = require('./builtinTags.js');
+var database = require('./database.js')
 
 function statusColor(status) {
   switch (status.toString()[0]) {
@@ -47,13 +48,14 @@ exports.sendpage = function(res, urlname, pagename, htmlTags={}, status=200, inp
   } else {
     htmlTags['DISPLAY_SHOP'] = 'block';
   }
-  fs.readFile('./src/'+pagename, 'utf8', function(err, html) {
+  fs.readFile('./src/'+pagename, 'utf8', async function(err, html) {
     if (err) {
       return console.error(err);
     } else if (type == 'text/html') {
       const temps = html.match(/[^\\]{(\s*?.*?)*?}/gi);
       // Mustache can render only one set of tags, so we are combining all tags here.
       var tags = {}
+      // TODO: Fix this spaghetti
       // Forgive my spaghetti here, I really shouldn't repeat code here.
       for (var key in builtin.tags(urlname)) {
         tags[key] = builtin.tags(urlname)[key]
@@ -63,6 +65,10 @@ exports.sendpage = function(res, urlname, pagename, htmlTags={}, status=200, inp
       }
       for (var key in input) {
         tags[key] = input[key]
+      }
+      if (input != null) {
+        result = await database.query('SELECT * FROM \"items\"');
+        tags['results'] = result['rows'];
       }
       html = mustache.render(html, tags);
     }
