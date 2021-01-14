@@ -1,6 +1,6 @@
 var http = require('http');
-var path = require('./paths.js');
-var resp = require('./response.js');
+var path = require('./internals/pathman.js');
+var resp = require('./internals/response.js');
 const port = 8000; // The port used for this HTTP server
 
 var server = http.createServer(function(req, res) {
@@ -9,7 +9,7 @@ var server = http.createServer(function(req, res) {
   res - Response
   */
   try {
-    if (path.path(req, res)) {
+    if (path.pathFind(req, res)) {
       // Redirect the user to the page, if it returns true then it failed else it succeeded.
       resp.sendpage(res, req.url, 'pages/404.html', {'NODE':process.versions['node'], 'URL':req.url, 'HOST':req.headers['host'], 'PORT':port}, 404);
     }

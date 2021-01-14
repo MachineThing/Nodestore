@@ -1,5 +1,5 @@
 const { Client } = require('pg');
-const { config } = require('./config.js');
+const { config } = require('../config.js');
 
 exports.query = async function(sql) {
   const database = new Client( // All of this is in the config.js file

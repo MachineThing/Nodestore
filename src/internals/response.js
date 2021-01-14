@@ -3,8 +3,8 @@ var color = require('colorette');
 var mime = require('mime');
 var mustache = require('mustache');
 var builtin = require('./builtinTags.js');
-var database = require('./database.js')
-
+var database = require('./database.js');
+var path = require('path');
 function statusColor(status) {
   switch (status.toString()[0]) {
     case "1":
@@ -39,16 +39,16 @@ function statusColor(status) {
 }
 
 exports.sendpage = function(res, urlname, pagename, htmlTags={}, status=200, input=null) {
-  var type = mime.getType('./src/'+pagename);
+  var type = mime.getType(path.join(__dirname, '../static/'+pagename));
   if (type == null) {
-    Error('Unknown filetype: '+'./src/'+pagename);
+    Error('Unknown filetype: '+path.join(__dirname, '../static/'+pagename));
   }
   if (input == null) {
     htmlTags['DISPLAY_SHOP'] = 'none';
   } else {
     htmlTags['DISPLAY_SHOP'] = 'block';
   }
-  fs.readFile('./src/'+pagename, 'utf8', async function(err, html) {
+  fs.readFile(path.join(__dirname, '../static/'+pagename), 'utf8', async function(err, html) {
     if (err) {
       return console.error(err);
     } else if (type == 'text/html') {
