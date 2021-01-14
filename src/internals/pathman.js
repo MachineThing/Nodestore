@@ -1,5 +1,5 @@
 var resp = require('./response.js');
-var paths = require('../paths.js');
+var { paths } = require('../paths.js');
 
 exports.pathFind = function(req, res) {
   // Find the path
