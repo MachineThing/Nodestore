@@ -43,11 +43,6 @@ exports.sendpage = function(res, urlname, pagename, htmlTags={}, status=200, inp
   if (type == null) {
     Error('Unknown filetype: '+path.join(__dirname, '../static/'+pagename));
   }
-  if (input == null) {
-    htmlTags['DISPLAY_SHOP'] = 'none';
-  } else {
-    htmlTags['DISPLAY_SHOP'] = 'block';
-  }
   fs.readFile(path.join(__dirname, '../static/'+pagename), 'utf8', async function(err, html) {
     if (err) {
       return console.error(err);
@@ -55,7 +50,7 @@ exports.sendpage = function(res, urlname, pagename, htmlTags={}, status=200, inp
       const temps = html.match(/[^\\]{(\s*?.*?)*?}/gi);
       // Mustache can render only one set of tags, so we are combining all tags here.
       tags = Object.assign({}, builtin.tags(urlname), htmlTags, input)
-      if (input != null) {
+      if (htmlTags['SHOP_TYPE'] != undefined) {
         var shop_dep = null;
         switch(tags['SHOP_TYPE']) {
           case "Operating System":
@@ -68,8 +63,13 @@ exports.sendpage = function(res, urlname, pagename, htmlTags={}, status=200, inp
             shop_dep = tags['SHOP_TYPE'];
             break;
         }
-        result = await database.query('SELECT * FROM \"items\" WHERE name LIKE \'%'+input['s'].replace('+', ' ')+'%\' AND department = \''+shop_dep+'\';');
-        tags['results'] = result['rows'];
+        if (input != null) {
+          result = await database.query('SELECT * FROM \"items\" WHERE name LIKE \'%'+input['s'].replace('+', ' ')+'%\' AND department = \''+shop_dep+'\';');
+          tags['results'] = result['rows'];
+        } else {
+          result = await database.query('SELECT * FROM \"items\" WHERE department = \''+shop_dep+'\';');
+          tags['results'] = result['rows'];
+        }
       }
       html = mustache.render(html, tags);
     }
