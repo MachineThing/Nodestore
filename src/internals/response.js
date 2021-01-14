@@ -54,18 +54,7 @@ exports.sendpage = function(res, urlname, pagename, htmlTags={}, status=200, inp
     } else if (type == 'text/html') {
       const temps = html.match(/[^\\]{(\s*?.*?)*?}/gi);
       // Mustache can render only one set of tags, so we are combining all tags here.
-      var tags = {}
-      // TODO: Fix this spaghetti
-      // Forgive my spaghetti here, I really shouldn't repeat code here.
-      for (var key in builtin.tags(urlname)) {
-        tags[key] = builtin.tags(urlname)[key]
-      }
-      for (var key in htmlTags) {
-        tags[key] = htmlTags[key]
-      }
-      for (var key in input) {
-        tags[key] = input[key]
-      }
+      tags = Object.assign({}, builtin.tags(urlname), htmlTags, input)
       if (input != null) {
         result = await database.query('SELECT * FROM \"items\"');
         tags['results'] = result['rows'];
