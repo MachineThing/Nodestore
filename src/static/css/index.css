@@ -2,6 +2,14 @@ body {
   font-family: Arial, sans-serif;
 }
 
+table, td {
+  border: 1px solid black;
+}
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
 .main {
   margin: 15px;
   padding: 0px 1em;
@@ -24,6 +32,12 @@ ul.item_menu li {
 ul.item_menu li a {
   color: black;
   text-decoration: none;
+}
+.item_name {
+  width: 90%
+}
+.item_price {
+  width: 10%
 }
 
 #shop_item_cpu {
