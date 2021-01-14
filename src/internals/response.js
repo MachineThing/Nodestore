@@ -56,7 +56,19 @@ exports.sendpage = function(res, urlname, pagename, htmlTags={}, status=200, inp
       // Mustache can render only one set of tags, so we are combining all tags here.
       tags = Object.assign({}, builtin.tags(urlname), htmlTags, input)
       if (input != null) {
-        result = await database.query('SELECT * FROM \"items\"');
+        var shop_dep = null;
+        switch(tags['SHOP_TYPE']) {
+          case "Operating System":
+            shop_dep = "OS";
+            break;
+          case "Personal Computer":
+            shop_dep = "PC";
+            break;
+          default:
+            shop_dep = tags['SHOP_TYPE'];
+            break;
+        }
+        result = await database.query('SELECT * FROM \"items\" WHERE name LIKE \'%'+input['s'].replace('+', ' ')+'%\' AND department = \''+shop_dep+'\';');
         tags['results'] = result['rows'];
       }
       html = mustache.render(html, tags);
