@@ -7,6 +7,7 @@ exports.paths = [
   ['/shop/pc', '/pages/search.html', {'SHOP_TYPE':'Personal Computer', 'SHOP_COLOR':'LightSalmon'}],
   // JS
   ['/js/formatTable.js', '/js/formatTable.js'],
+  ['/js/rtSearch.js', '/js/rtSearch.js'],
   // CSS
   ['/index.css', '/css/index.css'],
 ]

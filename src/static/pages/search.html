@@ -2,15 +2,13 @@
   <head>
     <title>Node Store</title>
     <link rel="stylesheet" href="/index.css">
-    <script src="/js/formatTable.js"></script>
+    <script src="/js/formatTable.js" type="text/javascript"></script>
+    <script src="/js/rtSearch.js" type="text/javascript"></script>
   </head>
   <body onload="formatTable()">
     <div class="main" style="background-image: linear-gradient({{SHOP_COLOR}}, white);">
       <h1>{{SHOP_TYPE}} department</h1>
-      <form action="{{URL}}">
-        <input type="text" name="s" placeholder="Search in the {{SHOP_TYPE}} department" /><br>
-        <input type="submit" value="Search" /><br>
-      </form>
+      <input type="text" id="search" onInput="updateTable()"placeholder="Search in the {{SHOP_TYPE}} department" /><br>
       <div class="store">
         <table id="item_table">
           {{#results}}
