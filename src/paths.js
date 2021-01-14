@@ -11,3 +11,7 @@ exports.paths = [
   // CSS
   ['/index.css', '/css/index.css'],
 ]
+
+exports.redirects = [
+  ['/shop', '/']
+]
